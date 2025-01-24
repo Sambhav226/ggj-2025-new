@@ -3,8 +3,9 @@ import random
 from settings import themes, gameSettings
 
 class Bubble:
-    def __init__(self, screen_rect):
-        self.screen_rect = screen_rect
+    def __init__(self, currentState):
+        self.stateManager = currentState.stateManager
+        self.screen_rect = self.stateManager.game.surface.get_rect()
         self.bubbles = []
         self.spawn_timer = 0
         self.spawn_interval = 1000  # Spawn a bubble every 1 second
@@ -13,7 +14,7 @@ class Bubble:
             "negative": ["scam", "fake", "fraud"],
             "risky": ["investment", "speculation", "boom"]
         }
-        self.theme = gameSettings["theme"]
+        # self.theme = gameSettings["theme"]
 
         # Set bubble size relative to screen dimensions
         self.base_radius = int(self.screen_rect.width * 0.02)  # 2% of screen width
@@ -38,13 +39,13 @@ class Bubble:
     def _get_color_based_on_category(self, category):
         # Use the theme's button colors for bubbles
         if category == "positive":
-            return pygame.Color(self.theme["buttons"]["success"])  # Green for positive
+            return pygame.Color(self.stateManager.game.theme["buttons"]["success"])  # Green for positive
         elif category == "negative":
-            return pygame.Color(self.theme["buttons"]["danger"])  # Red for negative
+            return pygame.Color(self.stateManager.game.theme["buttons"]["danger"])  # Red for negative
         elif category == "risky":
-            return pygame.Color(self.theme["buttons"]["warning"])  # Yellow for risky
+            return pygame.Color(self.stateManager.game.theme["buttons"]["warning"])  # Yellow for risky
         else:
-            return pygame.Color(self.theme["buttons"]["primary"])  # Blue for default
+            return pygame.Color(self.stateManager.game.theme["buttons"]["primary"])  # Blue for default
 
     def update(self, dt):
         self.spawn_timer += dt * 1000

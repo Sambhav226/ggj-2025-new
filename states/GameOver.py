@@ -10,7 +10,8 @@ class GameOver:
             relative_rect=pygame.Rect(0, 100, 200, 50),
             text="Retry",
             manager=stateManager.game.uiManager,
-            anchors={'centerx': 'centerx'}
+            anchors={'centerx': 'centerx'},
+            visible=False
         )
 
     def handle_event(self, event):

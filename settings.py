@@ -141,6 +141,17 @@ themes = {
             "warning": "#c18401",  # Yellow (warning)
             "danger": "#e45649",  # Red (danger/cancel)
         }
+    },
+    "debug": {
+        "background": "#000000",  # Custom background
+        "foreground": "#FFFFFF",  # Custom foreground
+        "buttons": {
+            "primary": "#FF0000",  # Custom primary color
+            "secondary": "#00FF00",  # Custom secondary color
+            "success": "#0000FF",  # Custom success color
+            "warning": "#FFFF00",  # Custom warning color
+            "danger": "#00FFFF",  # Custom danger color
+        }
     }
 }
 

@@ -8,12 +8,13 @@ class PlayState:
         self.stateManager = stateManager
         self.screen_rect = stateManager.game.surface.get_rect()
         self.gameObjects = {
-            "bubble": Bubbles.Bubble(self.screen_rect),
+            "bubble": Bubbles.Bubble(self),
             "blower": Blower.Blower(self.screen_rect)
         }
 
     def enter(self):
-        self.stateManager.game.theme = themes['gruvbox-dark']
+        # self.stateManager.game.theme = themes['gruvbox-dark']
+        ...
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
