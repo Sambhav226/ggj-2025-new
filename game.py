@@ -37,11 +37,13 @@ class Game:
 
 
     def update(self):
+        self.stateManager.currentState.update(self.dt)
         self.uiManager.update(self.dt)
 
     def render(self):
         self.surface.fill(self.theme["background"])
         self.uiManager.draw_ui(self.surface)
+        self.stateManager.currentState.render(self.surface)
         pygame.display.flip()
 
     def run(self):

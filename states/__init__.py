@@ -5,6 +5,7 @@ class GameStates(Enum):
     PLAY = auto()
     PAUSE = auto()
     OPTIONS = auto()
+    GAME_OVER = auto()
 
 from .StateManager import StateManager
 
