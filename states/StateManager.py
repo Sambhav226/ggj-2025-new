@@ -3,6 +3,7 @@ from . import GameStates
 from .MainMenu import MainMenu
 from .PlayState import PlayState
 from .OptionsMenu import OptionsMenu
+from .GameOver import GameOver
 
 class StateManager:
     # oh well, this looks susk wusky
@@ -10,7 +11,8 @@ class StateManager:
         self.game = gameSingleton
         self.states = {GameStates.MAIN_MENU: MainMenu(self),
                        GameStates.PLAY: PlayState(self),
-                       GameStates.OPTIONS: OptionsMenu(self)}
+                       GameStates.OPTIONS: OptionsMenu(self),
+                       GameStates.GAME_OVER: GameOver(self)}
 
         self.currentState = self.states[GameStates.MAIN_MENU]
 
