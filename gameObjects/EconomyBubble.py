@@ -1,22 +1,27 @@
 import pygame
 from pygame.math import Vector2
+from states import GameStates, StateManager
 
 class EconomyBubble:
-    def __init__(self, screen_rect):
+    def __init__(self, screen_rect, stateManager):  # stateManager is passed as a parameter
         self.screen_rect = screen_rect
-        self.position = Vector2(screen_rect.centerx, screen_rect.centery)  # Center of the screen
-        self.radius = 100  # Initial radius
-        self.max_radius = 150  # Maximum size before bursting
-        self.growth_rate = 5  # How much the bubble grows when a keyword bubble merges
-        self.color = (255, 0, 0)  # Red color for the economy bubble
-
+        self.stateManager = stateManager  # Ensure this line exists
+        self.position = Vector2(screen_rect.centerx, screen_rect.centery)
+        self.radius = 100
+        self.max_radius = 150
+        self.growth_rate = 5
+        self.color = (255, 0, 0)
         self.effects = {
             'pop': pygame.mixer.Sound('assets/audio/bubblepop.wav'),
             'death': pygame.mixer.Sound('assets/audio/death.wav')
         }
+        self.bursting = False
 
     def update(self, bubbles):
         """Check for collisions with keyword bubbles and grow/shrink accordingly."""
+        if self.bursting:
+            return  # Do nothing if the bubble is bursting
+
         for bubble in bubbles[:]:  # Iterate over a copy of the list
             # Calculate the distance between the economy bubble and the keyword bubble
             distance = self.position.distance_to(bubble["position"])
@@ -32,19 +37,22 @@ class EconomyBubble:
 
     def burst(self):
         """Handle the bursting of the economy bubble (game over)."""
+        self.bursting = True
         self.effects['death'].play()
-        print("Game Over! The economy bubble burst.")
-        # You can trigger a game over state here
+        self.stateManager.changeState(GameStates.GAME_OVER)  # Transition to game over state
 
     def render(self, surface):
         """Draw the economy bubble on the screen."""
-        pygame.draw.circle(
-            surface,
-            self.color,
-            (int(self.position.x), int(self.position.y)),
-            int(self.radius)
-        )
-        
+        if not self.bursting:
+            pygame.draw.circle(
+                surface,
+                self.color,
+                (int(self.position.x), int(self.position.y)),
+                int(self.radius)
+            )
+        else:
+            # Optionally, you can add an animation or effect here for the bursting
+            pass
+
     def handle_event(self, event):
         pass  # No event handling needed for bubbles
-            
