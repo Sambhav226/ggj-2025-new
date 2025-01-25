@@ -10,6 +10,11 @@ class EconomyBubble:
         self.growth_rate = 5  # How much the bubble grows when a keyword bubble merges
         self.color = (255, 0, 0)  # Red color for the economy bubble
 
+        self.effects = {
+            'pop': pygame.mixer.Sound('assets/audio/bubblepop.wav'),
+            'death': pygame.mixer.Sound('assets/audio/death.wav')
+        }
+
     def update(self, bubbles):
         """Check for collisions with keyword bubbles and grow/shrink accordingly."""
         for bubble in bubbles[:]:  # Iterate over a copy of the list
@@ -19,6 +24,7 @@ class EconomyBubble:
                 # Merge the keyword bubble into the economy bubble
                 self.radius += self.growth_rate
                 bubbles.remove(bubble)  # Remove the keyword bubble
+                self.effects['pop'].play()
 
                 # Check if the economy bubble has burst
                 if self.radius > self.max_radius:
@@ -26,6 +32,7 @@ class EconomyBubble:
 
     def burst(self):
         """Handle the bursting of the economy bubble (game over)."""
+        self.effects['death'].play()
         print("Game Over! The economy bubble burst.")
         # You can trigger a game over state here
 

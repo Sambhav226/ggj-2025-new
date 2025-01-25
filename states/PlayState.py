@@ -1,5 +1,5 @@
 import pygame
-from gameObjects import Bubbles, Blower, EconomyBubble
+from gameObjects import Bubbles, Blower, GameUI, EconomyBubble
 from settings import themes
 from . import GameStates
 
@@ -12,10 +12,14 @@ class PlayState:
             "blower": Blower.Blower(self.screen_rect),
             "economy": EconomyBubble.EconomyBubble(self.screen_rect)
         }
+        self.gameUI = {
+            'newsStrip': GameUI.News(stateManager)
+        }
 
     def enter(self):
         # self.stateManager.game.theme = themes['gruvbox-dark']
-        ...
+        for ui in self.gameUI.values():
+            ui.showUI()
 
     def update(self, dt):
         """Update all game objects."""
@@ -39,9 +43,12 @@ class PlayState:
         self.gameObjects["blower"].handle_event(event)
 
     def render(self, surface):
-        surface.fill(self.stateManager.game.theme["background"])
+        # surface.fill(self.stateManager.game.theme["background"])
         for obj in self.gameObjects.values():
             obj.render(surface)
+        for UIobj in self.gameUI.values():
+            UIobj.render(surface)
 
     def exit(self):
-        pass
+        for ui in self.gameUI.values():
+            ui.hideUI()

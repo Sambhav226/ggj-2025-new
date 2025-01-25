@@ -21,6 +21,8 @@ class Bubble:
         self.min_radius = int(self.screen_rect.width * 0.015)  # Minimum size
         self.max_radius = int(self.screen_rect.width * 0.03)   # Maximum size
 
+        self.effects = {'collide': pygame.mixer.Sound('assets/audio/bubblecollide.wav')}
+
     def spawn_bubble(self):
         category = random.choice(list(self.keywords.keys()))
         keyword = random.choice(self.keywords[category])
@@ -84,6 +86,7 @@ class Bubble:
                 min_distance = bubble1["radius"] + bubble2["radius"]
 
                 if distance < min_distance:
+                    self.effects['collide'].play()
                     # Bubbles are colliding, so deflect them
                     self.deflect_bubbles(bubble1, bubble2)
 

@@ -21,11 +21,11 @@ class Game:
 
         self.stateManager = StateManager(self)
 
-        print(pygame.display.get_desktop_sizes())
-        print(pygame.display.get_current_refresh_rate())
-        print(pygame.display.Info())
-        print(pygame.display.get_wm_info())
-        print(pygame.display.list_modes())
+        # print(pygame.display.get_desktop_sizes())
+        # print(pygame.display.get_current_refresh_rate())
+        # print(pygame.display.Info())
+        # print(pygame.display.get_wm_info())
+        # print(pygame.display.list_modes())
 
 
     def handle_event(self):
@@ -54,4 +54,3 @@ class Game:
 
             self.dt = self.clock.tick(self.refreshRate) / 1000.0
         pygame.quit()
-

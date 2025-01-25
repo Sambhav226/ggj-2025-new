@@ -14,9 +14,11 @@ class StateManager:
                        GameStates.OPTIONS: OptionsMenu(self),
                        GameStates.GAME_OVER: GameOver(self)}
 
-        self.currentState = self.states[GameStates.MAIN_MENU]
+        self.currentState = None
+        self.changeState(GameStates.MAIN_MENU)
 
     def changeState(self, newState: GameStates):
-        self.currentState.exit()
+        if self.currentState:
+            self.currentState.exit()
         self.currentState = self.states[newState]
         self.currentState.enter()

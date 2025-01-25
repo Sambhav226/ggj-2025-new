@@ -6,20 +6,29 @@ from . import GameStates
 class MainMenu():
     def __init__(self, stateManager):
         self.stateManager = stateManager
+        self.game_rect = stateManager.game.surface.get_rect()
         self.uiElements = {}
-        self.uiElements['startButton'] = pg.elements.UIButton(relative_rect=pygame.Rect(0, 30, 100, 20),
+        startButtonRect = pygame.Rect(0, 30, 
+                                      self.game_rect.width * 0.2, 
+                                      self.game_rect.height * 0.1)
+        self.uiElements['startButton'] = pg.elements.UIButton(relative_rect=startButtonRect,
                                                               text="Start Game",
                                                               manager=stateManager.game.uiManager,
-                                                              anchors={'centerx': 'centerx'},
+                                                              anchors={'centerx': 'centerx',
+                                                                       'centery': 'centery'},
                                                               )
-        self.uiElements['option'] = pg.elements.UIButton(relative_rect=pygame.Rect(0, 60, 100, 20),
+        optionButtonRect = pygame.Rect(0, 150, self.game_rect.width * 0.2, self.game_rect.height * 0.1)
+        self.uiElements['option'] = pg.elements.UIButton(relative_rect=optionButtonRect,
                                                          text="Options",
                                                          manager=stateManager.game.uiManager,
-                                                         anchors={'centerx': 'centerx'},
+                                                         anchors={'centerx': 'centerx',
+                                                                  'centery': 'centery'}
                                                          )
+        pygame.mixer.music.load("assets/audio/mainmenu.ogg")
 
 
     def enter(self):
+        pygame.mixer.music.play(loops=-1, fade_ms=1000)
         for element in self.uiElements.values():
             element.show()
 
@@ -40,5 +49,6 @@ class MainMenu():
         ...
 
     def exit(self):
+        pygame.mixer.music.fadeout(500)
         for element in self.uiElements.values():
             element.hide()
