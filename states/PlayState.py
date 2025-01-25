@@ -2,24 +2,30 @@ import pygame
 from gameObjects import Bubbles, Blower, GameUI, EconomyBubble
 from settings import themes
 from . import GameStates
-
 class PlayState:
     def __init__(self, stateManager):
         self.stateManager = stateManager
         self.screen_rect = stateManager.game.surface.get_rect()
+        self.reset()  # Initialize game objects
+
+    def reset(self):
+        """Reset the game state."""
         self.gameObjects = {
             "bubble": Bubbles.Bubble(self),
             "blower": Blower.Blower(self.screen_rect),
-            "economy": EconomyBubble.EconomyBubble(self.screen_rect)
+            "economy": EconomyBubble.EconomyBubble(self.screen_rect, self.stateManager)
         }
         self.gameUI = {
-            'newsStrip': GameUI.News(stateManager)
+            'newsStrip': GameUI.News(self.stateManager)
         }
 
     def enter(self):
-        # self.stateManager.game.theme = themes['gruvbox-dark']
+        """Reset the game state when entering the PlayState."""
+        self.reset()
         for ui in self.gameUI.values():
             ui.showUI()
+
+    # ... (rest of the PlayState class remains unchanged)
 
     def update(self, dt):
         """Update all game objects."""
