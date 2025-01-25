@@ -2,6 +2,23 @@
 
 - Incremental minimal game that simulates a very simplified economy bubble
 
+# TODO
+- [ ] App wide consistent theming for UI and other game objects
+    - [ ] One thing to do is to decide on a font and consistently use it for all UI elements
+        - Here be some fonts from this [website](https://www.fontspace.com/)
+            - [font1](https://www.fontspace.com/poppin-gumi-font-f121602)
+            - [font2](https://www.fontspace.com/theren-regular-font-f107067)
+            - [font3](https://www.fontspace.com/sheriff-bounce-font-f85031)
+
+- [ ] Fill NewsStrip with content
+    - [ ] First fill out [content.py](./gameObjects/content.py)
+    - [ ] Then loop through the keys and apply the efffect tag according to category
+    - [ ] Decide on how to set what news to show asw and in which class or ask gpt, claude or deepseeksongchu or wutteva da fugg da new model is
+
+- [ ] Polish the game and make it presentable
+    - [ ] If nae then prolly leave
+    
+
 
 ## Libraries used
 - pygame-ce

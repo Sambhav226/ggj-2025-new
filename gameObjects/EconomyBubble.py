@@ -6,7 +6,7 @@ class EconomyBubble:
         self.screen_rect = screen_rect
         self.position = Vector2(screen_rect.centerx, screen_rect.centery)  # Center of the screen
         self.radius = 100  # Initial radius
-        self.max_radius = 300  # Maximum size before bursting
+        self.max_radius = 150  # Maximum size before bursting
         self.growth_rate = 5  # How much the bubble grows when a keyword bubble merges
         self.color = (255, 0, 0)  # Red color for the economy bubble
 

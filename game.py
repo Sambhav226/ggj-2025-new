@@ -21,20 +21,12 @@ class Game:
 
         self.stateManager = StateManager(self)
 
-        # print(pygame.display.get_desktop_sizes())
-        # print(pygame.display.get_current_refresh_rate())
-        # print(pygame.display.Info())
-        # print(pygame.display.get_wm_info())
-        # print(pygame.display.list_modes())
-
-
     def handle_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
             self.stateManager.currentState.handle_event(event)
             self.uiManager.process_events(event)
-
 
     def update(self):
         self.stateManager.currentState.update(self.dt)

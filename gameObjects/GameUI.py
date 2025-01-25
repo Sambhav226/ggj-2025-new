@@ -1,6 +1,6 @@
 import pygame_gui
 from pygame import Rect # oh dear dear pygame_gui
-from pygame_gui.elements import UILabel, UITextBox
+from pygame_gui.elements import UITextBox
 
 class News:
     def __init__(self, stateManager):
