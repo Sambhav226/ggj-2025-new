@@ -11,9 +11,10 @@ class Bubble:
         self.spawn_timer = 0
         self.spawn_interval = 1000  # Spawn a bubble every 1 second
         self.keywords = {
-            "positive": ["growth", "profit", "success"],
-            "negative": ["scam", "fake", "fraud"],
-            "risky": ["investment", "speculation", "boom"]
+            "positive": ["growth", "profit", "success", "innovation", "stability"],
+            "negative": ["scam", "fake", "fraud", "collapse", "bankruptcy"],
+            "risky": ["investment", "speculation", "boom", "volatility", "leverage"],
+            "stable": ["regulation", "safety", "security", "balance"]
         }
 
         # Set bubble size relative to screen dimensions

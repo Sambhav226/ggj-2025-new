@@ -16,17 +16,26 @@ class EconomyBubble:
         self.target_radius = 100
         self.radius = self.target_radius
         self.max_radius = 150
+        self.min_radius = 50  # Minimum size for the bubble
         self.growth_rate = 5
         self.base_color = pygame.Color(98, 114, 164)
         self.color = pygame.Color(self.base_color)
         self.pulse_speed = 0.5
         self.pulse_phase = 0
         
+        # Instability properties
+        self.instability = 0  # Instability meter (0 to 100)
+        self.max_instability = 100  # Max instability before bursting
+        self.instability_growth_rate = 5  # Instability increase per risky bubble
+        self.instability_decay_rate = 10  # Instability decrease per stable bubble
+
+        # Score
+        self.score = 0  # Player's score
+
         # Sound effects
         self.effects = {
             'pop': pygame.mixer.Sound('assets/audio/bubblepop.wav'),
             'death': pygame.mixer.Sound('assets/audio/death.wav'),
-            # 'warning': pygame.mixer.Sound('assets/audio/warning.wav')
         }
         for sound in self.effects.values():
             sound.set_volume(0.5)
@@ -51,23 +60,23 @@ class EconomyBubble:
         self.radius += (self.target_radius - self.radius) * 0.1
         self.pulse_phase = (self.pulse_phase + self.pulse_speed) % 360
 
-        # Dynamic color based on size
+        # Dynamic color based on size and instability
         progress = self.target_radius / self.max_radius
-        self.color = self.base_color.lerp(pygame.Color(255, 0, 0), progress**2)
+        instability_factor = self.instability / self.max_instability
+
+        # Clamp the interpolation factor to [0, 1]
+        interpolation_factor = min(progress**2 + instability_factor, 1.0)
+        self.color = self.base_color.lerp(pygame.Color(255, 0, 0), interpolation_factor)
 
         # Check collisions
         for bubble in bubbles[:]:
             if self.position.distance_to(bubble["position"]) < self.radius + bubble["radius"]:
-                self.target_radius = min(self.target_radius + self.growth_rate, self.max_radius)
+                self._handle_bubble_collision(bubble)
                 bubbles.remove(bubble)
                 self.effects['pop'].play()
-                
-                if self.target_radius >= self.max_radius:
-                    self.burst()
 
         # Warning system
-        if not self.warning_activated and self.target_radius > self.max_radius * 0.8:
-            # self.effects['warning'].play()
+        if not self.warning_activated and self.instability > self.max_instability * 0.8:
             self.warning_activated = True
 
     def burst(self):
@@ -95,6 +104,24 @@ class EconomyBubble:
         if self.burst_radius > max(self.screen_rect.size)*1.5 and not self.burst_particles:
             self.stateManager.changeState(GameStates.GAME_OVER)
 
+    def _handle_bubble_collision(self, bubble):
+        if bubble["category"] == "positive":
+            self.target_radius = min(self.target_radius + self.growth_rate, self.max_radius)
+            self.score += 10  # Increase score for positive bubbles
+        elif bubble["category"] == "risky":
+            self.target_radius = min(self.target_radius + self.growth_rate * 2, self.max_radius)
+            self.instability = min(self.instability + self.instability_growth_rate, self.max_instability)
+            self.score += 20  # Increase score for risky bubbles
+        elif bubble["category"] == "negative":
+            self.target_radius = max(self.target_radius - self.growth_rate * 5, self.min_radius)  # Ensure it doesn't go below min size
+            self.score -= 30  # Decrease score for negative bubbles
+        elif bubble["category"] == "stable":
+            self.instability = max(self.instability - self.instability_decay_rate, 0)
+            self.score += 15  # Increase score for stable bubbles
+
+        if self.instability >= self.max_instability:
+            self.burst()
+
     def render(self, surface):
         if self.bursting:
             self._render_burst(surface)
@@ -109,6 +136,18 @@ class EconomyBubble:
         pygame.draw.circle(bubble_surf, self.color, 
                          (self.radius, self.radius), 
                          self.radius + pulse_offset)
+        
+         # Draw instability meter
+        instability_angle = 360 * (self.instability / self.max_instability)
+        pygame.draw.arc(bubble_surf, (255, 0, 0, 200), 
+                        (0, 0, self.radius*2, self.radius*2), 
+                        -90, -90 + instability_angle, 10)
+        
+        # Draw score inside the bubble
+        font = pygame.font.Font(None, int(self.radius * 0.5))
+        score_text = font.render(f"Score: {self.score}", True, (255, 255, 255))
+        score_rect = score_text.get_rect(center=(self.radius, self.radius))
+        bubble_surf.blit(score_text, score_rect)
 
         # Highlights
         highlight = pygame.Surface((self.radius*2, self.radius*2), pygame.SRCALPHA)
