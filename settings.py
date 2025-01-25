@@ -153,6 +153,7 @@ themes = {
             "danger": "#00FFFF",  # Custom danger color
         }
     }
+    
 }
 
 gameSettings = {
