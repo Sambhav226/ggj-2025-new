@@ -3,8 +3,8 @@
 - Incremental minimal game that simulates a very simplified economy bubble
 
 # TODO
-- [ ] App wide consistent theming for UI and other game objects
-    - [ ] One thing to do is to decide on a font and consistently use it for all UI elements
+- [x] App wide consistent theming for UI and other game objects
+    - [x] One thing to do is to decide on a font and consistently use it for all UI elements
         - Here be some fonts from this [website](https://www.fontspace.com/)
             - [font1](https://www.fontspace.com/poppin-gumi-font-f121602)
             - [font2](https://www.fontspace.com/theren-regular-font-f107067)
