@@ -9,13 +9,15 @@ class News:
                             self.surfaceRect.width * 0.995,
                             self.surfaceRect.height * 0.20)
         self.newsStrip = UITextBox(relative_rect=newsStripRect,
-                              html_text='you fuckin <effect id=hu>nitwit</effect>',
+                              html_text='Breaking News: Economy is stable!',
                               visible=False,
                               manager=stateManager.game.uiManager,
                               anchors={'centerx': 'centerx',
                                        'bottom': 'bottom'})
-        # self.newsStrip.set_active_effect(pygame_gui.TEXT_EFFECT_TYPING_APPEAR)
         self.newsStrip.set_active_effect(pygame_gui.TEXT_EFFECT_BOUNCE, effect_tag='hu')
+    
+    def update_news(self, news_text):
+        self.newsStrip.set_text(news_text)
     
     def showUI(self):
         self.newsStrip.show()

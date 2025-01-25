@@ -49,12 +49,17 @@ class PlayState:
         self.gameObjects["blower"].handle_event(event)
 
     def render(self, surface):
-        # surface.fill(self.stateManager.game.theme["background"])
+        surface.fill(self.stateManager.game.theme["background"])
         for obj in self.gameObjects.values():
             obj.render(surface)
         for UIobj in self.gameUI.values():
             UIobj.render(surface)
 
+        # # Display score at the top of the screen
+        # font = pygame.font.Font(None, 36)
+        # score_text = font.render(f"Score: {self.gameObjects['economy'].score}", True, (255, 255, 255))
+        # surface.blit(score_text, (10, 10))
+        
     def exit(self):
         for ui in self.gameUI.values():
             ui.hideUI()

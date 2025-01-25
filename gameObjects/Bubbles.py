@@ -11,9 +11,10 @@ class Bubble:
         self.spawn_timer = 0
         self.spawn_interval = 1000  # Spawn a bubble every 1 second
         self.keywords = {
-            "positive": ["growth", "profit", "success"],
-            "negative": ["scam", "fake", "fraud"],
-            "risky": ["investment", "speculation", "boom"]
+            "positive": ["growth", "profit", "success", "innovation", "stability"],
+            "negative": ["scam", "fake", "fraud", "collapse", "bankruptcy"],
+            "risky": ["investment", "speculation", "boom", "volatility", "leverage"],
+            "stable": ["regulation", "safety", "security", "balance"]
         }
 
         # Set bubble size relative to screen dimensions
@@ -23,7 +24,6 @@ class Bubble:
 
         # Border properties
         self.border_width = 10  # Width of the border
-        self.border_color = (255, 255, 255)  # White border
 
         self.effects = {'collide': pygame.mixer.Sound('assets/audio/bubblecollide.wav')}
 
@@ -123,30 +123,67 @@ class Bubble:
             bubble2["speed"] += impulse * normal
 
     def render(self, surface):
-        # Draw borders
-        pygame.draw.rect(surface, self.border_color, (0, 0, self.border_width, self.screen_rect.height))  # Left border
-        pygame.draw.rect(surface, self.border_color, (self.screen_rect.width - self.border_width, 0, self.border_width, self.screen_rect.height))  # Right border
-
         for bubble in self.bubbles:
-            # Draw bubble with a border for better aesthetics
-            pygame.draw.circle(surface, bubble["color"], (int(bubble["position"].x), int(bubble["position"].y)), bubble["radius"])
-            pygame.draw.circle(surface, (255, 255, 255), (int(bubble["position"].x), int(bubble["position"].y)), bubble["radius"], 2)  # White border
+            # Main bubble surface
+            radius = bubble["radius"]
+            bubble_surface = pygame.Surface((radius*2, radius*2), pygame.SRCALPHA)
+            
+            # Draw translucent bubble body
+            pygame.draw.circle(bubble_surface, bubble["color"], (radius, radius), radius)
 
-            # Add a highlight to make the bubble look more 3D
-            highlight_pos = (int(bubble["position"].x - bubble["radius"] * 0.3), int(bubble["position"].y - bubble["radius"] * 0.3))
-            highlight_radius = int(bubble["radius"] * 0.5)
-            highlight_color = (255, 255, 255, 128)  # Semi-transparent white
-            highlight_surface = pygame.Surface((highlight_radius * 2, highlight_radius * 2), pygame.SRCALPHA)
-            pygame.draw.circle(highlight_surface, highlight_color, (highlight_radius, highlight_radius), highlight_radius)
-            surface.blit(highlight_surface, highlight_pos)
+            # Primary highlight (larger, subtle)
+            highlight_main = pygame.Surface((radius*2, radius*2), pygame.SRCALPHA)
+            highlight_color = (255, 255, 255, 160)  # More transparent
+            pygame.draw.ellipse(highlight_main, highlight_color, (
+                radius * 0.7,  # X offset (right side)
+                radius * 0.15,  # Y offset
+                radius * 0.6,   # Width
+                radius * 0.3    # Height
+            ))
+            # Rotate and blend primary highlight
+            rotated_main = pygame.transform.rotate(highlight_main, 45)
+            bubble_surface.blit(rotated_main, rotated_main.get_rect(center=(radius, radius)))
 
-            # Render text inside the bubble
-            font_size = int(bubble["radius"] * 1.2)  # Adjust font size based on bubble size
+            # Secondary highlight (smaller, brighter)
+            highlight_secondary = pygame.Surface((radius*2, radius*2), pygame.SRCALPHA)
+            pygame.draw.ellipse(highlight_secondary, (255, 255, 255, 220), (
+                radius * 0.8,  # Closer to edge
+                radius * 0.25,
+                radius * 0.4,
+                radius * 0.15
+            ))
+            # Rotate and position secondary highlight
+            rotated_secondary = pygame.transform.rotate(highlight_secondary, 35)
+            bubble_surface.blit(rotated_secondary, rotated_secondary.get_rect(center=(radius, radius)))
+
+            # Thin glossy border (top half)
+            border_surface = pygame.Surface((radius*2, radius*2), pygame.SRCALPHA)
+            pygame.draw.arc(border_surface, (255, 255, 255, 100), 
+                        (0, 0, radius*2, radius*2), 
+                        -3.14/2, 3.14/2, 2)  # Top half arc
+            bubble_surface.blit(border_surface, (0, 0))
+
+            # Dynamic border shine (bottom subtle)
+            pygame.draw.circle(bubble_surface, (255, 255, 255, 30), 
+                            (radius, radius), radius, 2)
+
+            # Text rendering with shadow
+            font_size = int(radius * 0.7)
             font = pygame.font.Font(None, font_size)
-            text = font.render(bubble["keyword"], True, (0, 0, 0))  # Black text for contrast
-            text_rect = text.get_rect(center=(int(bubble["position"].x), int(bubble["position"].y)))
+            
+            # Text shadow
+            text_shadow = font.render(bubble["keyword"], True, (0, 0, 0, 100))
+            shadow_rect = text_shadow.get_rect(center=(radius+1, radius+1))
+            bubble_surface.blit(text_shadow, shadow_rect)
+            
+            # Main text
+            text = font.render(bubble["keyword"], True, (10, 10, 10, 240))
+            text_rect = text.get_rect(center=(radius, radius))
+            bubble_surface.blit(text, text_rect)
 
-            surface.blit(text, text_rect)
+            # Final blit to main surface
+            surface.blit(bubble_surface, 
+                        bubble["position"] - pygame.Vector2(radius, radius))
 
     def handle_event(self, event):
         pass  # No event handling needed for bubbles
