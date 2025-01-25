@@ -49,7 +49,6 @@ class PlayState:
         self.gameObjects["blower"].handle_event(event)
 
     def render(self, surface):
-        surface.fill(self.stateManager.game.theme["background"])
         for obj in self.gameObjects.values():
             obj.render(surface)
         for UIobj in self.gameUI.values():
