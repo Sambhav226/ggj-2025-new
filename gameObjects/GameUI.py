@@ -9,7 +9,7 @@ class News:
                             self.surfaceRect.width * 0.995,
                             self.surfaceRect.height * 0.20)
         self.newsStrip = UITextBox(relative_rect=newsStripRect,
-                              html_text='Economy is <effect id=hu><font color=#ff0000>stable</font><effect>',
+                              html_text='Our Main GUy is Sleeping like a Baby on your left, So here is a Half baked product, But with LOVE. Just try to increase economy Bubble and fill your pcocket.' ,
                               visible=False,
                               manager=stateManager.game.uiManager,
                               anchors={'centerx': 'centerx',
