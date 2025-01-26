@@ -1,0 +1,156 @@
+{
+    "__background": "#ED9455",
+    "__foreground": "#FFFBDA",
+    "text_box":
+    {
+        "colours":
+        {
+            "dark_bg": "#FFFBDA",
+            "normal_text": "#000000"
+        },        
+        "font":
+        {
+    
+            "name": "gijsuy",
+    
+            "size": "36",
+    
+            "bold": "0",
+    
+            "italic": "0",
+    
+            "regular_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "gijsuy.otf"
+    
+            },
+    
+            "bold_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "gijsuy.otf"
+    
+            },
+    
+            "italic_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "gijsuy.otf"
+    
+            },
+    
+            "bold_italic_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "gijsuy.otf"
+    
+            }
+    
+        }
+        
+    },
+
+    "button":
+    {
+        "colours":
+        {
+            "normal_bg": "#FFEC9E",
+            "hovered_bg": "#FFBB70",
+            "normal_text": "#ED9455"
+        },
+        "font":
+        {
+    
+            "name": "amex-huick",
+    
+            "size": "48",
+    
+            "bold": "0",
+    
+            "italic": "0",
+    
+            "regular_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "amex-huick.ttf"
+    
+            },
+    
+            "bold_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "amex-huick.ttf"
+    
+            },
+    
+            "italic_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "amex-huick.ttf"
+    
+            },
+    
+            "bold_italic_resource": {
+    
+                 "package": "assets.fonts",
+    
+                 "resource": "amex-huick.ttf"
+    
+            }
+    
+        }
+    },
+
+    "font":
+    {
+
+        "name": "amex-huick",
+
+        "size": "24",
+
+        "bold": "0",
+
+        "italic": "0",
+
+        "regular_resource": {
+
+             "package": "assets.fonts",
+
+             "resource": "amex-huick.ttf"
+
+        },
+
+        "bold_resource": {
+
+             "package": "assets.fonts",
+
+             "resource": "amex-huick.ttf"
+
+        },
+
+        "italic_resource": {
+
+             "package": "assets.fonts",
+
+             "resource": "amex-huick.ttf"
+
+        },
+
+        "bold_italic_resource": {
+
+             "package": "assets.fonts",
+
+             "resource": "amex-huick.ttf"
+
+        }
+
+    }
+}

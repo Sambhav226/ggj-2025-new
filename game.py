@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 
-from settings import gameSettings
+from settings import gameSettings, woops
 from states import StateManager
 
 class Game:
@@ -17,7 +17,7 @@ class Game:
         self.dt = 0.0
         self.theme = gameSettings["theme"]
         
-        self.uiManager = pygame_gui.UIManager(gameSettings["resolution"])
+        self.uiManager = pygame_gui.UIManager(gameSettings["resolution"], theme_path='uitheme.json')
 
         self.stateManager = StateManager(self)
 
@@ -33,7 +33,7 @@ class Game:
         self.uiManager.update(self.dt)
 
     def render(self):
-        self.surface.fill(self.theme["background"])
+        self.surface.fill(woops["__background"])
         self.uiManager.draw_ui(self.surface)
         self.stateManager.currentState.render(self.surface)
         pygame.display.flip()

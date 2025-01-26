@@ -160,3 +160,7 @@ gameSettings = {
     "resolution": (),  # Example resolution
     "theme": themes["gruvbox-light"]  # Default theme (referenced by name)
 }
+import json
+woops = json.load(open('uitheme.json'))
+
+# print(woops)
