@@ -1,10 +1,11 @@
+# File: /gameObjects/EconomyBubble.py
+
 import pygame
 import math
 from pygame.math import Vector2
 from random import randint
 from settings import themes, gameSettings
 from states import GameStates
-
 
 class EconomyBubble:
     def __init__(self, screen_rect, stateManager):
